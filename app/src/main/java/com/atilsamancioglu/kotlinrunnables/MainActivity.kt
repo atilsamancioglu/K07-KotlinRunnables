@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import kotlinx.android.synthetic.main.activity_main.*
+import com.atilsamancioglu.kotlinrunnables.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     var number = 0
     var runnable : Runnable = Runnable {  }
@@ -15,7 +16,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
     }
 
 
@@ -27,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             override fun run() {
 
                 number = number + 1
-                textView.text = "Time: $number"
+                binding.textView.text = "Time: $number"
 
                 handler.postDelayed(this,1000)
 
@@ -37,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         handler.post(runnable)
 
-        button.isEnabled = false
+        binding.button.isEnabled = false
 
 
     }
@@ -46,9 +50,9 @@ class MainActivity : AppCompatActivity() {
 
         handler.removeCallbacks(runnable)
         number = 0
-        textView.text = "Time: 0"
+        binding.textView.text = "Time: 0"
 
-        button.isEnabled = true
+        binding.button.isEnabled = true
 
 
     }
